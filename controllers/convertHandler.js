@@ -11,11 +11,11 @@ function ConvertHandler() {
     let result,dec;
     result=input.split(/[a-zA-Z]{1,3}/)[0].split('/');
     //console.log(result);
-    if(result.length>2)return false;
+    if(result.length>2)return 'invalid number';
     for(let i=0;i<result.length;i++)
-      if(!/^\d*(\.\d+)?$/.test(result[i]))return false;
+      if(!/^\d*(\.\d+)?$/.test(result[i]))return 'invalid number';
     if(result.length==2)return result=result[0]/result[1];
-    return result[0]?result:1;
+    return result[0]?result[0]:1;
   };
   
   this.getUnit = function(input) {
@@ -32,15 +32,15 @@ function ConvertHandler() {
         case 'L':result='L';break;
         case 'lbs':result='lbs';break;
         case 'kg':result='kg';break;
-        default:return false;
+        default:return 'invalid unit';
       }
     }
-    return result?result:false;
+    return result?result:'invalid unit';
   };
   
   this.getReturnUnit = function(initUnit) {
     let result;
-    if(initUnit==false)return false;
+    if(initUnit=='invalid unit')return 'invalid unit';
     switch(initUnit.toLowerCase()){
       case 'mi':result='km';break;
       case 'km':result='mi';break;
@@ -48,7 +48,7 @@ function ConvertHandler() {
       case 'l':result='gal';break;
       case 'lbs':result='kg';break;
       case 'kg':result='lbs';break;
-      default:return false;
+      default:return 'invalid unit';
     }
     return result;
   };
@@ -62,7 +62,7 @@ function ConvertHandler() {
       case 'L':result='liters';break;
       case 'lbs':result='pounds';break;
       case 'kg':result='kilograms';break;
-      default:return false;
+      default:return 'invalid unit';
     }
     return result;
   };
@@ -72,7 +72,7 @@ function ConvertHandler() {
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     let result;
-    if(initNum==false||initUnit==false)return false;
+    if(initNum=='invalid number')return 'invalid number';
     switch(initUnit){
       case 'mi':result=initNum*miToKm;break;
       case 'km':result=initNum/miToKm;break;
@@ -80,7 +80,7 @@ function ConvertHandler() {
       case 'L':result=initNum/galToL;break;
       case 'lbs':result=initNum*lbsToKg;break;
       case 'kg':result=initNum/lbsToKg;break;
-      default:return false;
+      default:return 'invalid unit';
     }
     return Number(result.toFixed(5));
   };
@@ -88,7 +88,7 @@ function ConvertHandler() {
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
     let result;
     result=initNum +' '+ this.spellOutUnit(initUnit) +' converts to '+returnNum +' '+this.spellOutUnit(returnUnit);
-    console.log(result);
+    //console.log(result);
     return result;
   };
   
